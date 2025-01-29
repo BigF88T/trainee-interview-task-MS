@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>ru.sergey.moysklad</groupId>
 	<artifactId>BasicRESTAPI</artifactId>
+	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>BasicRESTAPI</name>
 	<description>Task 1. Basic implementation of REST API</description>
