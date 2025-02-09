@@ -62,7 +62,7 @@ public class ProductsController {
                                              BindingResult bindingResult,
                                              @PathVariable("id") int id) {
         if(productDAO.show(id).isEmpty()){
-            throw new ProductException("Человек с id: " + id + " отсутствует");
+            throw new ProductException("Продукт с id: " + id + " отсутствует");
         }
         if(bindingResult.hasErrors())
             returnErrors(bindingResult);
@@ -74,7 +74,7 @@ public class ProductsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
         if(productDAO.show(id).isEmpty()){
-            throw new ProductException("Человек с id: " + id + " отсутствует");
+            throw new ProductException("Продукт с id: " + id + " отсутствует");
         }
         productDAO.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
