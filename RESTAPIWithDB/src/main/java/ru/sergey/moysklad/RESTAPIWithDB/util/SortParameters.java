@@ -2,7 +2,8 @@ package ru.sergey.moysklad.RESTAPIWithDB.util;
 
 public enum SortParameters {
     PRICE ("price"),
-    NAME ("name");
+    NAME ("name"),
+    STOCK ("inStock");
 
     private final String param;
 

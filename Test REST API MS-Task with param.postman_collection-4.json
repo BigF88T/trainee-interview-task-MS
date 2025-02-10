@@ -16,7 +16,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products?sort_by=name&name=te",
+					"raw": "http://localhost:8080/products?sort_by=inStock&direction=down&page=3&name=con",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -38,21 +38,19 @@
 						},
 						{
 							"key": "sort_by",
-							"value": "name"
+							"value": "inStock"
 						},
 						{
 							"key": "direction",
-							"value": "down",
-							"disabled": true
+							"value": "down"
 						},
 						{
 							"key": "page",
-							"value": "1",
-							"disabled": true
+							"value": "3"
 						},
 						{
 							"key": "name",
-							"value": "te"
+							"value": "con"
 						},
 						{
 							"key": "before",
