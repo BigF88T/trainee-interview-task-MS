@@ -1,7 +1,7 @@
 spring.application.name=RESTAPIWithDB
 
 spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://localhost:5432/ms_db
+spring.datasource.url=jdbc:postgresql://localhost:5433/ms_db
 spring.datasource.username=*your username*
 spring.datasource.password=*your password*
 

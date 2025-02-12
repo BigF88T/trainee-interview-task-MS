@@ -1,5 +1,6 @@
 package ru.sergey.moysklad.RESTAPIWithDB.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
@@ -16,7 +17,8 @@ public class ProductDTO {
     @PositiveOrZero(message = "Цена должна быть больше или равна нулю")
     private Double price = 0.0;
 
-    private Boolean inStock = false;
+    @PositiveOrZero(message = "Количество товара должно быть больше или равно нулю")
+    private int quantity;
 
     public String getName() {
         return name;
@@ -42,11 +44,12 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public Boolean getInStock() {
-        return inStock;
+
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setInStock(Boolean inStock) {
-        this.inStock = inStock;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

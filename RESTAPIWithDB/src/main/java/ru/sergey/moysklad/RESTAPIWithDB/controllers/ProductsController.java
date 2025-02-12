@@ -103,6 +103,7 @@ public class ProductsController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); // BAD_REQUEST - 400 статус
     }
 
+    //TODO: переписать всё так чтобы не было конвертации в контроллере
     private Product convertToProduct(ProductDTO productDTO) {
         return modelMapper.map(productDTO, Product.class);
     }

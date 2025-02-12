@@ -25,7 +25,7 @@ services:
       timeout: 3s
       retries: 3
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: unless-stopped
 
 volumes:

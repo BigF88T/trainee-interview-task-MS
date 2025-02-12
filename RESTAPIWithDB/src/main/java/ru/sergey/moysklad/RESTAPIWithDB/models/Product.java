@@ -27,8 +27,12 @@ public class Product {
     @Column(name = "price")
     private Double price = 0.0;
 
-    @Column(name = "instock")
+    @Column(name = "in_stock")
     private Boolean inStock = false;
+
+    @PositiveOrZero(message = "Количество товара должно быть больше или равно нулю")
+    @Column(name = "stock_quantity")
+    private int quantity;
 
     public Product() {}
 
@@ -38,7 +42,7 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, Double price, Boolean inStock) {
+    public Product(String name, String description, Double price, Boolean inStock, int quantity) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -84,6 +88,15 @@ public class Product {
     public void setInStock(Boolean inStock) {
         this.inStock = inStock;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 
     @Override
     public String toString() {

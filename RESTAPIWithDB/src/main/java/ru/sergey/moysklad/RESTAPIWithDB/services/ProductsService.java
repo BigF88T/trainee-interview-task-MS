@@ -5,7 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.sergey.moysklad.RESTAPIWithDB.models.Delivery;
 import ru.sergey.moysklad.RESTAPIWithDB.models.Product;
+import ru.sergey.moysklad.RESTAPIWithDB.repositories.DeliveriesRepository;
 import ru.sergey.moysklad.RESTAPIWithDB.repositories.ProductsRepository;
 import ru.sergey.moysklad.RESTAPIWithDB.util.ProductNotFoundException;
 import ru.sergey.moysklad.RESTAPIWithDB.util.SortParameters;
@@ -19,10 +21,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ProductsService {
     private final ProductsRepository productsRepository;
+    private final DeliveriesRepository deliveriesRepository;
 
     @Autowired
-    public ProductsService(ProductsRepository productsRepository) {
+    public ProductsService(ProductsRepository productsRepository, DeliveriesRepository deliveriesRepository) {
         this.productsRepository = productsRepository;
+        this.deliveriesRepository = deliveriesRepository;
     }
 
 
