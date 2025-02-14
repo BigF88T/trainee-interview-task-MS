@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-product
+      author: Sergey
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(4096)
+              - column:
+                  name: price
+                  type: DOUBLE
+                  constraints:
+                    checkConstraint: "price > 0"
+                  defaultValue: 0.0
+              - column:
+                  name: in_stock
+                  type: BOOLEAN
+                  defaultValue: false
+              - column:
+                  name: stock_quantity
+                  type: INTEGER
+                  defaultValue: 0
+

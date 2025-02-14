@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sale
+      author: Sergey
+      changes:
+        - createTable:
+            tableName: sale
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: prod
+              - column:
+                  name: quantity
+                  type: integer
+                  constraints:
+                    checkConstraint: "quantity > 0"
