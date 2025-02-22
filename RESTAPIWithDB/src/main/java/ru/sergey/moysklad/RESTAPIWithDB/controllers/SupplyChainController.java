@@ -7,8 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.sergey.moysklad.RESTAPIWithDB.dto.DeliveryDTORequest;
+import ru.sergey.moysklad.RESTAPIWithDB.dto.DeliveryDTO;
 import ru.sergey.moysklad.RESTAPIWithDB.dto.SaleDTORequest;
+import ru.sergey.moysklad.RESTAPIWithDB.kafka.KafkaProducer;
 import ru.sergey.moysklad.RESTAPIWithDB.services.DeliveriesServices;
 import ru.sergey.moysklad.RESTAPIWithDB.services.SalesService;
 import ru.sergey.moysklad.RESTAPIWithDB.util.*;
@@ -21,23 +22,26 @@ import java.util.List;
 public class SupplyChainController {
     private final DeliveriesServices deliveriesServices;
     private final SalesService salesService;
+    private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public SupplyChainController(DeliveriesServices deliveriesServices, SalesService salesService) {
+    public SupplyChainController(DeliveriesServices deliveriesServices, SalesService salesService, KafkaProducer kafkaProducer) {
         this.deliveriesServices = deliveriesServices;
         this.salesService = salesService;
+        this.kafkaProducer = kafkaProducer;
     }
 
 
     @PostMapping("/delivery")
-    public ResponseEntity<HttpStatus> newDelivery(@RequestBody @Valid DeliveryDTORequest deliveryDTORequest,
+    public ResponseEntity<HttpStatus> newDelivery(@RequestBody @Valid DeliveryDTO deliveryDTO,
                                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             returnError(bindingResult);
 
 
-        deliveriesServices.makeDelivery(deliveriesServices.convertToDelivery(deliveryDTORequest));
+        deliveriesServices.makeDelivery(deliveriesServices.convertToDelivery(deliveryDTO));
 
+        kafkaProducer.sendMessage("New delivery: " + deliveryDTO.getTitle());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

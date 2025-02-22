@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class DeliveryDTORequest {
+public class DeliveryDTO {
 
     @NotNull
     @Size(min = 2, max = 255, message = "Название товара должно быть больше 2 и меньше 255 символов")

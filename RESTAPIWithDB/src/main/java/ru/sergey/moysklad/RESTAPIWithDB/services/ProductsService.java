@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sergey.moysklad.RESTAPIWithDB.models.Delivery;
 import ru.sergey.moysklad.RESTAPIWithDB.models.Product;
 import ru.sergey.moysklad.RESTAPIWithDB.repositories.DeliveriesRepository;
 import ru.sergey.moysklad.RESTAPIWithDB.repositories.ProductsRepository;

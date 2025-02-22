@@ -3,7 +3,7 @@ package ru.sergey.moysklad.RESTAPIWithDB.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.sergey.moysklad.RESTAPIWithDB.dto.DeliveryDTORequest;
+import ru.sergey.moysklad.RESTAPIWithDB.dto.DeliveryDTO;
 import ru.sergey.moysklad.RESTAPIWithDB.models.Delivery;
 import ru.sergey.moysklad.RESTAPIWithDB.models.Product;
 import ru.sergey.moysklad.RESTAPIWithDB.repositories.DeliveriesRepository;
@@ -36,23 +36,23 @@ public class DeliveriesServices {
         deliveriesRepository.save(delivery);
     }
 
-    public Delivery convertToDelivery(DeliveryDTORequest deliveryDTORequest) {
-        long productId = deliveryDTORequest.getProductId();
+    public Delivery convertToDelivery(DeliveryDTO deliveryDTO) {
+        long productId = deliveryDTO.getProductId();
         Delivery delivery = new Delivery();
         delivery.setProduct(productsRepository.findById(productId).orElseThrow(ProductNotFoundException::new));
-        delivery.setTitle(deliveryDTORequest.getTitle());
-        delivery.setQuantity(deliveryDTORequest.getQuantity());
+        delivery.setTitle(deliveryDTO.getTitle());
+        delivery.setQuantity(deliveryDTO.getQuantity());
 
         return delivery;
     }
 
-    public DeliveryDTORequest covertToDeliveryDTORequest(Delivery delivery) {
+    public DeliveryDTO covertToDeliveryDTORequest(Delivery delivery) {
         long productId = delivery.getProduct().getId();
-        DeliveryDTORequest deliveryDTORequest = new DeliveryDTORequest();
-        deliveryDTORequest.setTitle(delivery.getTitle());
-        deliveryDTORequest.setProductId(productId);
-        deliveryDTORequest.setQuantity(delivery.getQuantity());
+        DeliveryDTO deliveryDTO = new DeliveryDTO();
+        deliveryDTO.setTitle(delivery.getTitle());
+        deliveryDTO.setProductId(productId);
+        deliveryDTO.setQuantity(delivery.getQuantity());
 
-        return deliveryDTORequest;
+        return deliveryDTO;
     }
 }
