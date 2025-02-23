@@ -1,0 +1,86 @@
+version: '3.7'
+volumes:
+  kafka-volume:
+  zookeeper-volume:
+networks:
+  kafka_network:
+    driver: bridge
+services:
+  zookeeper:
+    container_name: zookeeper
+    restart: always
+    image: 'docker.io/bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    networks:
+      - kafka_network
+    volumes:
+      - zookeeper-volume:/bitnami
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=10000
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    container_name: kafka
+    restart: always
+    image: 'docker.io/bitnami/kafka:latest'
+    ports:
+      - '9092:9092'
+    networks:
+      - kafka_network
+    volumes:
+      - kafka-volume:/bitnami
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_LOG_DIRS: /tmp/kafka_mounts/logs
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      #- KAFKA_CFG_PROCESS_ROLES=broker
+      #- KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@<your_host>:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka:9094,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://kafka:9092,INTERNAL://kafka:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    depends_on:
+      - zookeeper
+
+  app:
+    build:
+      context: ./RESTAPIWithDB/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - kafka_network
+    depends_on:
+      - ms_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ms_db/ms_db
+
+  ms_db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1029384756"
+    volumes:
+      - ./RESTAPIWithDB/infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d ms_db -U postgres" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    ports:
+      - "5433:5432"
+    networks:
+      - kafka_network
+    restart: unless-stopped
+
+  notification-service:
+    build:
+      context: ./kafka-service/
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - kafka_network
+

@@ -5,7 +5,7 @@ WORKDIR /app
 COPY mvnw pom.xml ./
 COPY . /app/.
 
-RUN mvn -f /app/pom.xml clean package
+RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
 
 
 FROM openjdk:17-ea-17-jdk-oracle

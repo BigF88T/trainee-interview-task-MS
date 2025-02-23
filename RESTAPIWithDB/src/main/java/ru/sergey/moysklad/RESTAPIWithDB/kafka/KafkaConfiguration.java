@@ -9,7 +9,7 @@ public class KafkaConfiguration {
 
     @Bean
     public NewTopic newTopic() {
-        return new NewTopic("kafkaService",1, (short) 1);
+        return new NewTopic("notification",1, (short) 1);
     }
 
 }
