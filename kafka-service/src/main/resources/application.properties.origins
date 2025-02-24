@@ -1,0 +1,15 @@
+spring.application.name=notification-service
+server.port=8082
+
+spring.kafka.consumer.bootstrap-servers=kafka:9092
+spring.kafka.consumer.group-id=notific_service
+spring.kafka.consumer.auto-offset-reset=latest
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username= *your mail*
+spring.mail.password= *your password* (получите пароль для приложения по ссылке:https://support.google.com/accounts/answer/185833?hl=ru, либо запросом "получить пароль приложения для Gmail в Google")
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
