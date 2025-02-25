@@ -9,12 +9,14 @@
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Liquibase](https://img.shields.io/badge/liquibase-%230db7ed.svg?style=for-the-badge&logo=liquibase&logoColor=white)
 
 ## Содержание
 - [Технологии](#Технологии)
+- [Описание проекта](#Описание)
 - [Быстрый старт](#Использование)
 - [Тестирование](#Тестирование)
 
@@ -29,6 +31,59 @@
 + [Docker](https://www.docker.com/)
 + [Liquibase](https://www.liquibase.com/)
 
+## Описание
+
+### Сервис RESTAPIWithDB
+Реализует логику по созданию, получению, редактированию 
+и удалению сущностей: 
++ [Продукт](#product); 
+
+
++ [Покупка](#sale);
+
+
++ [Поставка](#delivery); 
+
+#### Product
+
+Сущность продукт характеризуется наличием внутри нее полей:
++ id (Целочисленное значение генерируемое по умолчанию);
++ name (Строковое имя длинной до 255 символов);
++ description (Строковое описание товара длинной до 4096 символов);
++ price (Дробное число, ограниченное значениями выше нуля);
++ inStock (Логическое значение наличия или отсутствия товара со значением false по умолчанию);
++ quantity (Целочисленное значение количества товара со значением 0 по умолчанию
+и ограниченное значениями выше нуля);
+
+#### Delivery
+
+Сущность поставка имеет поля:
++ id (Целочисленное значение генерируемое по умолчанию);
++ title (Строковое имя длинной до 255 символов);
++ productId (Целочисленное значение id товара, который был передан);
++ quantity (Целочисленное значение количества товара в поставке со 
+ значением 0 по умолчанию и ограниченное значениями выше нуля);
+
+#### Sale
+
+Сущность продажа имеет поля:
++ id (Целочисленное значение генерируемое по умолчанию);
++ title (Строковое имя длинной до 255 символов);
++ productId (Целочисленное значение id товара, который был продан);
++ quantity (Целочисленное значение количества проданного товара со
+  значением 0 по умолчанию и ограниченное значениями выше нуля);
+
+#### Валидация 
+
+Каждое поле имеет валидацию. При получении неправильных данных будет отдан
+соответствующий код и json-объект с сообщением об ошибке. 
+
+При продаже товара, который имеет недостаточное количество в наличии будет возвращена ошибка.
+
+
+### Сервис Notification
+
+Сервис отправляет email-сообщение при создании новой поставки.
 
 ## Использование
 В каждой ветке *(t1, t2, t3 и т.д.)* внутри директории проекта лежит файл: *"start_script(windows).bat"*.
